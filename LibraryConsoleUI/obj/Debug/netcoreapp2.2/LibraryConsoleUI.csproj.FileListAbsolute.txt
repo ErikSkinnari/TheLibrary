@@ -1,0 +1,14 @@
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryConsoleUI.deps.json
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryConsoleUI.runtimeconfig.json
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryConsoleUI.runtimeconfig.dev.json
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryConsoleUI.dll
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryConsoleUI.pdb
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.csprojAssemblyReference.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.csproj.CoreCompileInputs.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.AssemblyInfoInputs.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.AssemblyInfo.cs
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.dll
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.pdb
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryClassLibrary.dll
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\bin\Debug\netcoreapp2.2\LibraryClassLibrary.pdb
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryConsoleUI\obj\Debug\netcoreapp2.2\LibraryConsoleUI.csproj.CopyComplete
