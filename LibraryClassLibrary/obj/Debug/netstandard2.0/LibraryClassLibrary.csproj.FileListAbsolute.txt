@@ -1,0 +1,9 @@
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\bin\Debug\netstandard2.0\LibraryClassLibrary.deps.json
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\bin\Debug\netstandard2.0\LibraryClassLibrary.dll
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\bin\Debug\netstandard2.0\LibraryClassLibrary.pdb
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.csprojAssemblyReference.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.csproj.CoreCompileInputs.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.AssemblyInfoInputs.cache
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.AssemblyInfo.cs
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.dll
+D:\008_projects\004_programming\002_dotnet\TheLibrary\LibraryClassLibrary\obj\Debug\netstandard2.0\LibraryClassLibrary.pdb
