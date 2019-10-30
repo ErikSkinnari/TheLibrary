@@ -6,36 +6,56 @@ namespace LibraryConsoleUI
 {
     class Program
     {
-        private static Library MyLibrary = new Library();
+        private static Library MyLibrary = new Library(true); // Create library instance
+
+        // Some headers, just graphical stuff.. sugar.... icing on the cake.
+        private static string[] headerMain = new string[]
+        {
+            "******************************************************************************************************************************************************",
+            "*                                                                    The Library                                                                     *",
+            "******************************************************************************************************************************************************\n"
+        };
+        private static string[] headerDelBook = new string[]
+        {
+            "******************************************************************************************************************************************************",
+            "*                                                               Choose book to remove                                                                *",
+            "******************************************************************************************************************************************************\n"
+        };
+        private static string[] headerEnterDetails = new string[]
+        {
+            "******************************************************************************************************************************************************",
+            "*                                                                Enter book details                                                                  *",
+            "******************************************************************************************************************************************************\n"
+        };
+
+        private static string[] headerBooks = new string[]
+        {
+            "******************************************************************************************************************************************************",
+            "*                                                                Books in the Library                                                                *",
+            "******************************************************************************************************************************************************\n"
+        };
+        private static string[] headerBookTypeSelection = new string[]
+        {
+            "******************************************************************************************************************************************************",
+            "*                                                              Choose book type to add                                                               *",
+            "******************************************************************************************************************************************************\n"
+        };
 
         
+        // Where the magic starts!!
         static void Main(string[] args)
         {
             Console.CursorVisible = false; // Hide cursor as default
-            PrepareBookList();
             MainMenu();
         }
 
-        private static void PrepareBookList()
+        private static void MainMenu()
         {
-            MyLibrary.AddBook(new NonFiction("Smith Ben", "Beginning JSON", "Apress", "2015", "978-1484202036", 324));
-            MyLibrary.AddBook(new NonFiction("Fry Hannah", "Hello World: Being Human in the Age of Algorithms", "W. W. Norton & Company", "2019", "978-0393357363", 256));
-            MyLibrary.AddBook(new NonFiction("Mojang AB, The Official Minecraft Team", "Minecraft: Guide to Survival", "Del Rey", "2020", "978-0593158135", 96));
-            MyLibrary.AddBook(new Novel("Verne Jules", "Twenty Thousand Leagues Under the Sea", "Pierre-Jules Hetzel", "1870", "978-1530436743", 238));
-            MyLibrary.AddBook(new Novel("Verne Jules", "Journey to the Center of the Earth", "CreateSpace Independent Publishing Platform", "2015", "978-1514640609", 146));
-            MyLibrary.AddBook(new Novel("Adams Douglas", "The Hitchhiker's Guide to the Galaxy", "Del Rey", "1995", "978-0345391803", 224));
-            MyLibrary.AddBook(new EBook("Byström Jonas", "Programmering Visual C++ Grunder", "Triangle Connection LLC", "2013", "978-9175310220", 1));
-            MyLibrary.AddBook(new EBook("Spraul V. Anton", "Think Like a Programmer", "NO STARCH PRESS", "2012", "9781593274566", 1));
-            MyLibrary.AddBook(new EBook("Joshi Bipin", "Beginning SOLID Principles and Design Patterns for ASP.NET Developers", "APress", "2016", "9781484218471", 1));
-        }
-
-        public static void MainMenu() 
-        {
-            // The options to chose between in main menu
+            // The options to choose between in main menu
             string[] mainMenuItems = new string[] {
-            "Add Book", 
-            "Add multiple books", 
-            "List/Print all books", 
+            "Add Book",
+            "Add multiple books",
+            "List/Print all books",
             "Search in library",
             "Remove Book from Library",
             "Exit Application"
@@ -43,128 +63,187 @@ namespace LibraryConsoleUI
 
             while (true)
             {
-                int menuSelection = HpHelpers.MenuHandler(mainMenuItems);
+                int menuSelection = HpHelpers.MenuHandler(mainMenuItems, headerMain);
 
+                // Beware! Unnessecary comments ahead.
                 switch (menuSelection)
                 {
                     // Add Book
                     case 0:
                         AddBook();
-                    break;
+                        break;
 
                     // Add Multiple Books
                     case 1:
                         AddBooks();
-                    break;
+                        break;
 
                     // List/Print all Books
                     case 2:
                         ListBooks(MyLibrary.ListAllBooks());
-                    break;
+                        break;
 
                     // Search in Library
                     case 3:
                         SearchLibrary();
-                    break;
+                        break;
 
+                    // Remove Book
                     case 4:
                         RemoveBook();
-                    break;
+                        break;
 
                     // Exit application
                     case 5:
                         HpHelpers.ExitApp();
-                    break;
+                        break;
                 }
+                // End of asbsolutely unnessecary comments. (hopefully)
             }
         }
 
+        /// <summary>
+        /// Lets user pick a book in the library and remove it from the list in library
+        /// Also lets the user give confirmation before the book is removed.
+        /// </summary>
         private static void RemoveBook()
         {
-            Console.Clear();
-            System.Console.WriteLine("Select Book to remove, Press ENTER to get list of books");
-            Console.ReadLine();
-            MyLibrary.RemoveBook(HpHelpers.MenuHandler(MyLibrary.ListAllBooks()));
+            if (MyLibrary.ListAllBooks().Count > 0) // Else error thrown if list is empty
+            {
+                Book bookToRemove = HpHelpers.MenuHandler(MyLibrary.ListAllBooks(), headerDelBook);
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                bool confirmation = HpHelpers.GetBool($"Are you sure you want to remove {bookToRemove.Title} from library? ");
+                Console.ResetColor();
+                if (confirmation)
+                {
+                    HpHelpers.PrintHeader(headerDelBook);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(bookToRemove.ToString());
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Deleted!!!");
+                    Console.ResetColor();
+                    MyLibrary.RemoveBook(bookToRemove);
+                    Console.WriteLine("Press ENTER to continue");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nDeletion aborted, no worrys! Press ENTER to continue...");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                NoBooks();
+            }
         }
 
+        /// <summary>
+        /// Tell user there is no books in this library. Worthless library!!!!
+        /// </summary>
+        private static void NoBooks()
+        {
+            HpHelpers.PrintHeader(headerMain);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("No books in list! Press ENTER to go to main menu.");
+            Console.ResetColor();
+            Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Takes a search string entered by user and searches through the books in the library and then returns
+        /// a list of books that matches the search
+        /// </summary>
         private static void SearchLibrary()
         {
-            Console.Clear();
-            System.Console.Write("Enter search term: ");
-            string searchTerm = Console.ReadLine();
-            List<Book> searchResult = MyLibrary.SearchLibrary(searchTerm);
-
-            if (searchResult.Count < 1)
+            if (MyLibrary.ListAllBooks().Count > 0)
             {
-                System.Console.WriteLine("No result found. Press ENTER to go back to Main Menu");
+                Console.Clear();
+                HpHelpers.PrintHeader(headerMain);
 
+                string searchTerm = HpHelpers.GetString("Enter search term: ");
+
+                List<Book> searchResult = MyLibrary.SearchLibrary(searchTerm);
+
+                if (searchResult.Count < 1)
+                {
+                    System.Console.WriteLine("No result found. Press ENTER to go back to Main Menu");
+
+                    Console.ReadLine();
+                }
+                else
+                {
+                    ListBooks(searchResult);
+                }
+            }
+            else
+            {
+                NoBooks();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all books inte the library list
+        /// </summary>
+        /// <param name="books"></param>
+        private static void ListBooks(List<Book> books)
+        {
+            if (MyLibrary.ListAllBooks().Count > 0)
+            {
+                int counter = 0; // Every second row in another color - counter
+
+                HpHelpers.PrintHeader(headerBooks);
+
+                string columns = string.Format("{0,-20} {1,-40} {2,-8} {3,-25} {4,-20} {5,-15}", "Author", "| Title", "| Year", "| Publisher", "| ISBN", "| Category");
+                Console.ForegroundColor = ConsoleColor.DarkMagenta; // Print column names in magenta color
+                System.Console.WriteLine(columns);
+                Console.ResetColor();
+
+                foreach (var book in books)
+                {
+                    if (counter % 2 == 0) // Even numbers in blue color
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        System.Console.WriteLine(book.ToString());
+                        Console.ResetColor();
+                    }
+                    else // Odd numbers in white
+                    {
+                        System.Console.WriteLine(book.ToString());
+                    }
+                    counter++;
+                }
+                Console.ForegroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("\nPress ENTER to Go back to main menu");
+                Console.ResetColor();
                 Console.ReadLine();
             }
             else
             {
-                ListBooks(searchResult);
+                NoBooks();
             }
-        }
-
-        private static void ListBooks(List<Book> books)
-        {
-            int counter = 0; // Every second row in another color - counter
-            Console.Clear();
-            System.Console.WriteLine("************************************************************");
-            System.Console.WriteLine("*                   Books in the Library                   *");
-            System.Console.WriteLine("************************************************************\n");
-
-            string columns = string.Format("{0,-20} {1,-40} {2,-30} {3,-20} {4,-20}", "Author", "| Title", "| Publisher", "| ISBN", "| Category");
-            Console.ForegroundColor = ConsoleColor.DarkMagenta; // Print column names in magenta color
-            System.Console.WriteLine(columns);
-            Console.ResetColor();
-
-            foreach (var book in books)
-            {
-                if(counter % 2 == 0) // Even numbers in blue color
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    System.Console.WriteLine(book.ToString());
-                    Console.ResetColor();
-                }
-                else // Odd numbers in white
-                {
-                    System.Console.WriteLine(book.ToString());
-                }
-
-                counter++;
-            }
-            Console.ForegroundColor = ConsoleColor.Green;
-            System.Console.WriteLine("\nPress ENTER to Go back to main menu");
-            Console.ResetColor();
-            Console.ReadLine();
         }
 
         private static void AddBook()
         {
-            string[] addBookOptions = new string[] {
-            "Add new Novel",
-            "Add new E-Book",
-            "Add new Short Story",
-            "Add new Non Fiction book"
-            };
+            string[] addBookOptions = new string[] { "Add new Novel", "Add new E-Book", "Add new Non Fiction book" };
+
             // What kind of book should be added?
-            int selection = HpHelpers.MenuHandler(addBookOptions);
+            int selection = HpHelpers.MenuHandler(addBookOptions, headerBookTypeSelection);
 
             Console.CursorVisible = true;
-            if(selection == 0)
+            if (selection == 0)
             {
                 MyLibrary.AddBook(CreateNovel());
             }
-            else if(selection == 1)
+            else if (selection == 1)
             {
                 MyLibrary.AddBook(CreateEBook());
             }
-            else if(selection == 2)
-            {
-                MyLibrary.AddBook(CreateShortStory());
-            }
-            else if(selection == 3)
+            else if (selection == 2)
             {
                 MyLibrary.AddBook(CreateNonFiction());
             }
@@ -179,75 +258,72 @@ namespace LibraryConsoleUI
         private static void AddBooks()
         {
             bool addMoreBooks = true;
-
-            while(addMoreBooks)
+            while (addMoreBooks)
             {
                 AddBook();
                 addMoreBooks = HpHelpers.GetBool("Do you want to add more books? ");
             }
         }
 
-        public static Book CreateShortStory()
+        private static Book CreateEBook()
         {
-            var shortStory = new ShortStory(
-                HpHelpers.GetString("Enter the Name of the Author: "),
-                HpHelpers.GetString("Enter the Title of the Book: "),
-                HpHelpers.GetString("Enter the Publisher: "),
-                GetYearOfPublishing(),
-                HpHelpers.GetString("Enter the 13 digit ISBN-number: "),
-                HpHelpers.GetInt("Enter the number of Pages: ")
-            );
-            return shortStory;
-        }
-
-        public static Book CreateEBook()
-        {
+            HpHelpers.PrintHeader(headerEnterDetails);
+            string[] bookDetails = getBookInfo();
             var eBook = new EBook(
-                HpHelpers.GetString("Enter the Name of the Author: "),
-                HpHelpers.GetString("Enter the Title of the Book: "),
-                HpHelpers.GetString("Enter the Publisher: "),
-                GetYearOfPublishing(),
-                HpHelpers.GetString("Enter the 13 digit ISBN-number: "),
+                bookDetails[0], bookDetails[1], bookDetails[2], bookDetails[3], bookDetails[4],
                 HpHelpers.GetInt("Enter the E-Book length in minutes: ")
             );
             return eBook;
         }
 
-        public static Book CreateNovel()
+        private static Book CreateNovel()
         {
+            HpHelpers.PrintHeader(headerEnterDetails);
+            string[] bookDetails = getBookInfo();
             var novel = new Novel(
-                HpHelpers.GetString("Enter the Name of the Author: "),
-                HpHelpers.GetString("Enter the Title of the Book: "),
-                HpHelpers.GetString("Enter the Publisher: "),
-                GetYearOfPublishing(),
-                HpHelpers.GetString("Enter the 13 digit ISBN-number: "),
+                bookDetails[0], bookDetails[1], bookDetails[2], bookDetails[3], bookDetails[4],
                 HpHelpers.GetInt("Enter the number of Pages: ")
             );
             return novel;
         }
 
-        public static Book CreateNonFiction()
+        private static Book CreateNonFiction()
         {
+            HpHelpers.PrintHeader(headerEnterDetails);
+            string[] bookDetails = getBookInfo();
             var nonFiction = new NonFiction(
-                HpHelpers.GetString("Enter the Name of the Author: "),
-                HpHelpers.GetString("Enter the Title of the Book: "),
-                HpHelpers.GetString("Enter the Publisher: "),
-                GetYearOfPublishing(),
-                HpHelpers.GetString("Enter the 13 digit ISBN-number: "),
+                bookDetails[0], bookDetails[1], bookDetails[2], bookDetails[3], bookDetails[4],
                 HpHelpers.GetInt("Enter the number of Pages: ")
             );
             return nonFiction;
         }
 
-        static string GetYearOfPublishing()
+        private static string[] getBookInfo()
         {
-            string output;
+            string[] output = new string[]
+            {
+                HpHelpers.GetString("Enter the Name of the Author: "),
+                HpHelpers.GetString("Enter the Title of the Book: "),
+                HpHelpers.GetString("Enter the Publisher: "),
+                GetYearOfPublishing(),
+                HpHelpers.GetString("Enter the ISBN-number: ")
+            };
+            return output;
+        }
 
-            // Getting the year in digits, HpHelpers does the error handling
-            // Method GetInt used so value entered is an integer, even if it is then stored as a string.
-            int yearOfPublication = HpHelpers.GetInt("Enter the Year of Publication(4 digits): ");
-
-            output = Convert.ToString(yearOfPublication);
+        /// <summary>
+        /// Getting the year in digits, HpHelpers does the error handling
+        /// Method GetInt used so value entered is an integer, even if it is then stored as a string.
+        /// </summary>
+        /// <returns></returns>
+        private static string GetYearOfPublishing()
+        {
+            string output = "";
+            while (output.Length != 4)
+            {
+                int yearOfPublication = HpHelpers.GetInt("Enter the Year of Publication(4 digits): ");
+                output = Convert.ToString(yearOfPublication);
+            }
 
             return output;
         }
