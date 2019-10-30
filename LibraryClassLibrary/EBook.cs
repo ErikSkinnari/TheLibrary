@@ -19,11 +19,11 @@ namespace LibraryClassLibrary
             string output;
 
             string author = Author.FormatStringLength(20);
-            string title = Title.FormatStringLength(35);
-            string publisher = Publisher.FormatStringLength(20);
+            string title = Title.FormatStringLength(38);
+            string publisher = Publisher.FormatStringLength(23);
 
-            output = string.Format("{0,-20} {1,-40} {2,-30} {3,-20} {4,-15} {5}", $"{author}", 
-            $"| {title}", $"| {publisher}", $"| {ISBN}", "| E-Book ", $"| Length(minutes): {LengthInMinutes}");
+            output = string.Format("{0,-20} {1,-40} {2,-8} {3,-25} {4,-20} {5,-15} {6}", $"{author}", 
+            $"| {title}", $"| {YearOfPublication}", $"| {publisher}", $"| {ISBN}", "| E-Book ", $"| Length(minutes): {LengthInMinutes}");
             
             return output;
         }
